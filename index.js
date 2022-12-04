@@ -47,6 +47,9 @@ const background = new Sprite({
     },
     image: image
 });
+const keys{
+    
+}
 
 function animate(){
     window.requestAnimationFrame(animate); //creates an infinite loop
@@ -64,6 +67,7 @@ function animate(){
         playerImage.width/4, //width of which the image will be rendered out at
         playerImage.height, //height of which the image will be rendered out at
         );
+        if();
 }
 animate();
 window.addEventListener('keydown',(e) => {
