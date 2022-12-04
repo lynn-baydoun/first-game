@@ -25,7 +25,7 @@ image.onload = () => {
         0, //
         playerImage.width/4, //crop width
         playerImage.height, // height 
-        canvas.width/2 - playerImage.width/2, 
+        canvas.width/2 - (playerImage.width/4)/2, 
         canvas.height/2 - playerImage.height/2,
         playerImage.width/4, //width of which the image will be rendered out at
         playerImage.height, //height of which the image will be rendered out at
