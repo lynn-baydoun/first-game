@@ -10,11 +10,9 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
 image.src = './img/Aiden town.png'
-console.log(image);
 
 const playerImage = new Image();
 playerImage.src = './img/playerDown.png';
-console.log(playerImage);
 
 //because it takes very long for it to load and the code is being called instantly so the image is not loading to make it load we use this
 // image.onload = () => {
@@ -31,11 +29,30 @@ console.log(playerImage);
 //         playerImage.height, //height of which the image will be rendered out at
 //         );
 // }
+class Sprite{
+    constructor({position, velocity, image}){
+        this.position = position;
+        this.image = image;
+    }
+
+    draw(){
+        context.drawImage(this.image, -980, -600);
+    }
+}
+
+const background = new Sprite({
+    position: {
+        x:-980,
+        y:-600
+    },
+    image: image
+});
+
 function animate(){
     window.requestAnimationFrame(animate); //creates an infinite loop
     console.log("animate");
     //we need to keep rerendering it as the animation is going
-    context.drawImage(image, -980, -600);
+    background.draw();
     context.drawImage(
         playerImage,
         0, //starting to crop the sprite sheet from the beginning (the left)
@@ -48,7 +65,7 @@ function animate(){
         playerImage.height, //height of which the image will be rendered out at
         );
 }
-
+animate();
 window.addEventListener('keydown',(e) => {
     switch (e.key) {
         case 'w':
