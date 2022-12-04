@@ -12,8 +12,7 @@ const image = new Image();
 image.src = './img/Aiden town.png'
 console.log(image);
 
-context.drawImage(image, 0,0);
 //because it takes very long for it to load and the code is being called instantly so the image is not loading to make it load we use this
 image.onload = () => {
-
+    context.drawImage(image, -1100, -500);
 }
