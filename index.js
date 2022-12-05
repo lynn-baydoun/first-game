@@ -10,6 +10,8 @@ for(let i = 0; i < collisions.length; i+=70){ // 70 is the width of the map this
     collisionsMap.push(collisions.slice(i, 70 + i));
 }
 class Boundary{
+    static width = 48; //this is only in case i forget what 48 is for
+    static height = 48;
     constructor({position}){
         this.position = position;
         this.width = 48; //don't forget that we imported this map 4 times its actual size 12x4
@@ -24,16 +26,18 @@ class Boundary{
 const boundaries = []
 collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the arrays)
     row.forEach((symbol, j) =>{ //j is to loop through the elements within the arrays
+        if(symbol === 1025)
         boundaries.push(
             new Boundary({
                 position:{
-                    x: 0, 
-                    y: 0
+                    x: j * Boundary.width,  // this will lay out the 'tiles' aka array elements perfectly on our map
+                    y: i * Boundary.height
                 }
             })
         );
     })
 })
+
 
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
@@ -95,6 +99,7 @@ function animate(){
     console.log("animate");
     //we need to keep rerendering it as the animation is going
     background.draw();
+    
     context.drawImage(
         playerImage,
         0, //starting to crop the sprite sheet from the beginning (the left)
