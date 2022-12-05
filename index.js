@@ -1,11 +1,39 @@
 const canvas = document.querySelector('canvas'); //reference any element within the html
 const context = canvas.getContext('2d'); //setting the api to 2d
 
+
 canvas.width = 1024; //can do this in css obv these num are to ensure it works on any screen
 canvas.height = 576;
 
-context.fillStyle = "white";
-context.fillRect(0, 0, canvas.width, canvas.height);
+const collisionsMap = []
+for(let i = 0; i < collisions.length; i+=70){ // 70 is the width of the map this is looping through the collision array in increments 
+    collisionsMap.push(collisions.slice(i, 70 + i));
+}
+class Boundary{
+    constructor({position}){
+        this.position = position;
+        this.width = 48; //don't forget that we imported this map 4 times its actual size 12x4
+        this.height = 48;
+    }
+    draw(){
+        context.fillStyle = 'red';
+        context.fillRect(this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
+const boundaries = []
+collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the arrays)
+    row.forEach((symbol, j) =>{ //j is to loop through the elements within the arrays
+        boundaries.push(
+            new Boundary({
+                position:{
+                    x: 0, 
+                    y: 0
+                }
+            })
+        );
+    })
+})
 
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
