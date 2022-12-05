@@ -24,14 +24,18 @@ class Boundary{
 }
 
 const boundaries = []
+const offset ={
+    x:-980,
+    y:-600 
+}
 collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the arrays)
     row.forEach((symbol, j) =>{ //j is to loop through the elements within the arrays
         if(symbol === 1025)
         boundaries.push(
             new Boundary({
                 position:{
-                    x: j * Boundary.width,  // this will lay out the 'tiles' aka array elements perfectly on our map
-                    y: i * Boundary.height
+                    x: j * Boundary.width + offset.x,  // this will lay out the 'tiles' aka array elements perfectly on our map
+                    y: i * Boundary.height + offset.y, 
                 }
             })
         );
@@ -74,8 +78,8 @@ class Sprite{
 
 const background = new Sprite({
     position: {
-        x:-980,
-        y:-600
+        x: offset.x,
+        y: offset.y
     },
     image: image
 });
@@ -94,12 +98,20 @@ const keys = {
     }
 }
 
+const testBoundary = new Boundary({
+    position: {
+        x: 400,
+        y: 400
+    }
+})
 function animate(){
     window.requestAnimationFrame(animate); //creates an infinite loop
     console.log("animate");
     //we need to keep rerendering it as the animation is going
     background.draw();
-    
+    boundaries.forEach(boundary => {
+        boundary.draw();
+    })
     context.drawImage(
         playerImage,
         0, //starting to crop the sprite sheet from the beginning (the left)
