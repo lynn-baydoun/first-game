@@ -73,7 +73,6 @@ class Sprite{
     }
 
     draw(){
-        context.drawImage(this.image, this.position.x, this.position.y);
         context.drawImage(
             this.image,
             0, //starting to crop the sprite sheet from the beginning (the left)
