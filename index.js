@@ -66,15 +66,36 @@ playerImage.src = './img/playerDown.png';
 //         );
 // }
 class Sprite{
-    constructor({position, velocity, image}){
+    constructor({position, velocity, image, frames = {max: 1}}) {
         this.position = position;
         this.image = image;
+        this.frames = frames;
     }
 
     draw(){
         context.drawImage(this.image, this.position.x, this.position.y);
+        context.drawImage(
+            this.image,
+            0, //starting to crop the sprite sheet from the beginning (the left)
+            0, //
+            this.image.width/this.frames.max, 
+            this.image.height, // height 
+            this.position.x, //the placement of our sprite
+            this.position.y, 
+            this.image.width/this.frames.max, //width of which the image will be rendered out at
+            this.image.height, //height of which the image will be rendered out at
+            );
     }
 }
+
+const player = new Sprite({
+    position:{
+        x: canvas.width/2 - (192/4)/2, //the 192x68 are the dimensions of the image you can find them in properties -> details
+        y: canvas.height/2 - 68/2,
+    },
+    image: playerImage,
+    frames: {max: 4}
+})
 
 const background = new Sprite({
     position: {
@@ -104,29 +125,40 @@ const testBoundary = new Boundary({
         y: 400
     }
 })
+const movables = [background, testBoundary]
 function animate(){
     window.requestAnimationFrame(animate); //creates an infinite loop
-    console.log("animate");
     //we need to keep rerendering it as the animation is going
     background.draw();
-    boundaries.forEach(boundary => {
-        boundary.draw();
-    })
-    context.drawImage(
-        playerImage,
-        0, //starting to crop the sprite sheet from the beginning (the left)
-        0, //
-        playerImage.width/4, //crop width
-        playerImage.height, // height 
-        canvas.width/2 - (playerImage.width/4)/2, 
-        canvas.height/2 - playerImage.height/2,
-        playerImage.width/4, //width of which the image will be rendered out at
-        playerImage.height, //height of which the image will be rendered out at
-        );
-       if(keys.w.pressed && lastKey === 'w') background.position.y += 3;
-       else if(keys.a.pressed && lastKey === 'a') background.position.x += 3;
-       else if(keys.s.pressed && lastKey === 's') background.position.y -= 3;
-       else if(keys.d.pressed && lastKey === 'd') background.position.x -= 3;
+    testBoundary.draw();
+    player.draw();
+    // boundaries.forEach(boundary => {
+    //     boundary.draw();
+    // })
+    
+    //if(player.position.x + player.width)
+
+
+    if(keys.w.pressed && lastKey === 'w') {
+        movables.forEach(movable =>{
+            movable.position.y += 3;
+        });
+        }
+    else if(keys.a.pressed && lastKey === 'a')  {
+        movables.forEach(movable =>{
+            movable.position.x += 3;
+        });
+        }
+    else if(keys.s.pressed && lastKey === 's')  {
+        movables.forEach(movable =>{
+            movable.position.y -= 3;
+        });
+        }
+    else if(keys.d.pressed && lastKey === 'd')  {
+        movables.forEach(movable =>{
+            movable.position.x -= 3;
+        });
+       }
 }
 animate();
 
