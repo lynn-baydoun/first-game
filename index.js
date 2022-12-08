@@ -141,6 +141,7 @@ function animate(){
         boundary.draw();
     })
     
+    let moving = true;
     //telling the character to move
     if(keys.w.pressed && lastKey === 'w') {
             //the for loop is to predict whether or not you character is going to collide with a boundary
@@ -159,12 +160,15 @@ function animate(){
                 // player.position.y <= testBoundary.position.y + testBoundary.height &&
                 // player.position.y + player.height >= testBoundary.position.y)
                 {
-                    console.log("colliding");
+                   moving = false;
+                   break;
                 }
             }
+        if(moving){
             movables.forEach(movable =>{
                 movable.position.y += 3;
             });
+        }
         }
     else if(keys.a.pressed && lastKey === 'a')  {
         movables.forEach(movable =>{
@@ -221,4 +225,3 @@ window.addEventListener('keyup',(e) => {
             break
     }
 })
-
