@@ -94,7 +94,7 @@ class Sprite{
 const player = new Sprite({
     position:{
         x: canvas.width/2 - (192/4)/2, //the 192x68 are the dimensions of the image you can find them in properties -> details
-        y: canvas.height/2 - 68/2,
+        y: canvas.height/2 + 30 - 68/2,
     },
     image: playerImage,
     frames: {max: 4}
@@ -171,19 +171,85 @@ function animate(){
         }
         }
     else if(keys.a.pressed && lastKey === 'a')  {
+        //the for loop is to predict whether or not you character is going to collide with a boundary
+        for(let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            //detecting for collision
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {...boundary, position: {
+                    x: boundary.position.x + 3,
+                    y: boundary.position.y
+                }}
+            }))
+            // player.position.x + player.width >= testBoundary.position.x && 
+            // player.position.x <= testBoundary.position.x + testBoundary.width &&
+            // player.position.y <= testBoundary.position.y + testBoundary.height &&
+            // player.position.y + player.height >= testBoundary.position.y)
+            {
+               moving = false;
+               break;
+            }
+        }
+    if(moving){
         movables.forEach(movable =>{
             movable.position.x += 3;
         });
+    }
         }
     else if(keys.s.pressed && lastKey === 's')  {
+              //the for loop is to predict whether or not you character is going to collide with a boundary
+        for(let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i];
+            //detecting for collision
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: {...boundary, position: {
+                    x: boundary.position.x,
+                    y: boundary.position.y - 3
+                }}
+            }))
+            // player.position.x + player.width >= testBoundary.position.x && 
+            // player.position.x <= testBoundary.position.x + testBoundary.width &&
+            // player.position.y <= testBoundary.position.y + testBoundary.height &&
+            // player.position.y + player.height >= testBoundary.position.y)
+            {
+               moving = false;
+               break;
+            }
+        }
+    if(moving){
         movables.forEach(movable =>{
             movable.position.y -= 3;
         });
+    }
         }
     else if(keys.d.pressed && lastKey === 'd')  {
-        movables.forEach(movable =>{
-            movable.position.x -= 3;
-        });
+                //the for loop is to predict whether or not you character is going to collide with a boundary
+                for(let i = 0; i < boundaries.length; i++) {
+                    const boundary = boundaries[i];
+                    //detecting for collision
+                    if(rectangularCollision({
+                        rectangle1: player,
+                        rectangle2: {...boundary, position: {
+                            x: boundary.position.x - 3,
+                            y: boundary.position.y
+                        }}
+                    }))
+                    // player.position.x + player.width >= testBoundary.position.x && 
+                    // player.position.x <= testBoundary.position.x + testBoundary.width &&
+                    // player.position.y <= testBoundary.position.y + testBoundary.height &&
+                    // player.position.y + player.height >= testBoundary.position.y)
+                    {
+                       moving = false;
+                       break;
+                    }
+                }
+            if(moving){
+                movables.forEach(movable =>{
+                    movable.position.x -= 3;
+                });
+            }
        }
 }
 animate();
