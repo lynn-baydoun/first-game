@@ -45,7 +45,7 @@ collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the a
 
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
-image.src = './img/Aiden town.png'
+image.src = './img/AidenTown.png'
 
 const playerImage = new Image();
 playerImage.src = './img/playerDown.png';
@@ -137,26 +137,34 @@ function animate(){
     background.draw();
     player.draw();
     //adding all the boundaries
-    boundaries.forEach(boundary => {
+    boundaries.forEach(boundary => { //we cannot put a break statement inside a forEach
         boundary.draw();
-        //detecting for collision
-        if(rectangularCollision({
-            rectangle1: player,
-            rectangle2: testBoundary
-        }))
-            // player.position.x + player.width >= testBoundary.position.x && 
-            // player.position.x <= testBoundary.position.x + testBoundary.width &&
-            // player.position.y <= testBoundary.position.y + testBoundary.height &&
-            // player.position.y + player.height >= testBoundary.position.y)
-            {
-            console.log("colliding");
-        }
     })
     
+    //telling the character to move
     if(keys.w.pressed && lastKey === 'w') {
-        movables.forEach(movable =>{
-            movable.position.y += 3;
-        });
+            //the for loop is to predict whether or not you character is going to collide with a boundary
+            for(let i = 0; i < boundaries.length; i++) {
+                const boundary = boundaries[i];
+                //detecting for collision
+                if(rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...boundary, position: {
+                        x: boundary.position.x,
+                        y: boundary.position.y + 3
+                    }}
+                }))
+                // player.position.x + player.width >= testBoundary.position.x && 
+                // player.position.x <= testBoundary.position.x + testBoundary.width &&
+                // player.position.y <= testBoundary.position.y + testBoundary.height &&
+                // player.position.y + player.height >= testBoundary.position.y)
+                {
+                    console.log("colliding");
+                }
+            }
+            movables.forEach(movable =>{
+                movable.position.y += 3;
+            });
         }
     else if(keys.a.pressed && lastKey === 'a')  {
         movables.forEach(movable =>{
@@ -212,6 +220,5 @@ window.addEventListener('keyup',(e) => {
             keys.d.pressed = false;
             break
     }
-    console.log(keys)
 })
 
