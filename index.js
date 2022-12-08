@@ -34,6 +34,9 @@ collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the a
 const image = new Image();
 image.src = './img/AidenTown.png'
 
+const foregroundImage = new Image();
+foregroundImage.src = './img/4groundObj.png'
+
 const playerImage = new Image();
 playerImage.src = './img/playerDown.png';
 
@@ -74,7 +77,7 @@ const foreground = new Sprite({
         x: offset.x,
         y: offset.y
     },
-    image: image
+    image: foregroundImage
 });
 const keys = {
     w: {
@@ -91,7 +94,7 @@ const keys = {
     }
 }
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foreground]
 
 function rectangularCollision({rectangle1, rectangle2}){
     return(player.position.x + player.width >= rectangle2.position.x && 
@@ -104,12 +107,12 @@ function animate(){
     window.requestAnimationFrame(animate); //creates an infinite loop
     //we need to keep rerendering it as the animation is going
     background.draw();
-    player.draw();
     //adding all the boundaries
     boundaries.forEach(boundary => { //we cannot put a break statement inside a forEach
         boundary.draw();
     })
-    
+    player.draw();
+    foreground.draw();
     let moving = true;
     //telling the character to move
     if(keys.w.pressed && lastKey === 'w') {
