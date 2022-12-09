@@ -2,17 +2,18 @@ class Sprite{
     constructor({position, velocity, image, frames = {max: 1}}) {
         this.position = position;
         this.image = image;
-        this.frames = frames;
+        this.frames = {...frames, val: 0, elapsed: 0};
         this.image.onload = () => {
             this.width = this.image.width / this.frames.max;
             this.height = this.image.height;
         }
+        this.moving = false;
     }
 
     draw(){
         context.drawImage(
             this.image,
-            0, //starting to crop the sprite sheet from the beginning (the left)
+            this.frames.val * this.width, //starting to crop the sprite sheet from the beginning (the left)
             0, //
             this.image.width/this.frames.max, 
             this.image.height, // height 
@@ -21,6 +22,18 @@ class Sprite{
             this.image.width/this.frames.max, //width of which the image will be rendered out at
             this.image.height, //height of which the image will be rendered out at
             );
+            
+            if(this.moving){
+                if(this.frames.max > 1){
+                    this.frames.elapsed++;
+                }
+                
+                if(this.frames.elapsed % 10 === 0){
+                    if(this.frames.val < this.frames.max - 1)
+                    this.frames.val++;
+                    else this.frames.val = 0;
+                }
+            }
     }
 }
 class Boundary{

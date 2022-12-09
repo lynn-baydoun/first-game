@@ -97,7 +97,8 @@ const keys = {
 const movables = [background, ...boundaries, foreground]
 
 function rectangularCollision({rectangle1, rectangle2}){
-    return(player.position.x + player.width >= rectangle2.position.x && 
+    return(
+        player.position.x + player.width >= rectangle2.position.x && 
         rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
@@ -116,6 +117,7 @@ function animate(){
     let moving = true;
     //telling the character to move
     if(keys.w.pressed && lastKey === 'w') {
+        playr.moving = true;
             //the for loop is to predict whether or not you character is going to collide with a boundary
             for(let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i];
