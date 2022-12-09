@@ -37,22 +37,33 @@ image.src = './img/AidenTown.png'
 const foregroundImage = new Image();
 foregroundImage.src = './img/4groundObj.png'
 
-const playerImage = new Image();
-playerImage.src = './img/playerDown.png';
+const playerDown = new Image();
+playerDown.src = './img/playerDown.png';
+
+const playerUp = new Image();
+playerUp.src = './img/playerUp.png';
+
+const playerLeft = new Image();
+playerLeft.src = './img/playerLeft.png';
+
+const playerRight = new Image();
+playerRight.src = './img/playerRight.png';
+
+
 
 //because it takes very long for it to load and the code is being called instantly so the image is not loading to make it load we use this
 // image.onload = () => {
 //     context.drawImage(image, -980, -600);
 //     context.drawImage(
-//         playerImage,
+//         playerDown,
 //         0, //starting to crop the sprite sheet from the beginning (the left)
 //         0, //
-//         playerImage.width/4, //crop width
-//         playerImage.height, // height 
-//         canvas.width/2 - (playerImage.width/4)/2, 
-//         canvas.height/2 - playerImage.height/2,
-//         playerImage.width/4, //width of which the image will be rendered out at
-//         playerImage.height, //height of which the image will be rendered out at
+//         playerDown.width/4, //crop width
+//         playerDown.height, // height 
+//         canvas.width/2 - (playerDown.width/4)/2, 
+//         canvas.height/2 - playerDown.height/2,
+//         playerDown.width/4, //width of which the image will be rendered out at
+//         playerDown.height, //height of which the image will be rendered out at
 //         );
 // }
 
@@ -61,8 +72,14 @@ const player = new Sprite({
         x: canvas.width/2 - (192/4)/2, //the 192x68 are the dimensions of the image you can find them in properties -> details
         y: canvas.height/2 + 30 - 68/2,
     },
-    image: playerImage,
-    frames: {max: 4}
+    image: playerDown,
+    frames: {max: 4},
+    sprites:{
+        up: playerUp,
+        down: playerDown,
+        left: playerLeft,
+        right: playerRight,
+    }
 })
 
 const background = new Sprite({
@@ -116,8 +133,9 @@ function animate(){
     foreground.draw();
     let moving = true;
     //telling the character to move
+    player.moving = false;
     if(keys.w.pressed && lastKey === 'w') {
-        playr.moving = true;
+        player.moving = true;
             //the for loop is to predict whether or not you character is going to collide with a boundary
             for(let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i];
@@ -145,6 +163,7 @@ function animate(){
         }
         }
     else if(keys.a.pressed && lastKey === 'a')  {
+        player.moving = true;
         //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
@@ -172,6 +191,7 @@ function animate(){
     }
         }
     else if(keys.s.pressed && lastKey === 's')  {
+        player.moving = true;
               //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
@@ -199,6 +219,7 @@ function animate(){
     }
         }
     else if(keys.d.pressed && lastKey === 'd')  {
+        player.moving = true;
                 //the for loop is to predict whether or not you character is going to collide with a boundary
                 for(let i = 0; i < boundaries.length; i++) {
                     const boundary = boundaries[i];
