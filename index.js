@@ -136,6 +136,7 @@ function animate(){
     player.moving = false;
     if(keys.w.pressed && lastKey === 'w') {
         player.moving = true;
+        player.image = player.sprites.up;
             //the for loop is to predict whether or not you character is going to collide with a boundary
             for(let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i];
@@ -164,6 +165,7 @@ function animate(){
         }
     else if(keys.a.pressed && lastKey === 'a')  {
         player.moving = true;
+        player.image = player.sprites.left;
         //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
@@ -192,6 +194,7 @@ function animate(){
         }
     else if(keys.s.pressed && lastKey === 's')  {
         player.moving = true;
+        player.image = player.sprites.down;
               //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
@@ -220,6 +223,7 @@ function animate(){
         }
     else if(keys.d.pressed && lastKey === 'd')  {
         player.moving = true;
+        player.image = player.sprites.right;
                 //the for loop is to predict whether or not you character is going to collide with a boundary
                 for(let i = 0; i < boundaries.length; i++) {
                     const boundary = boundaries[i];
