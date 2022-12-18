@@ -46,7 +46,7 @@ class Boundary{
         this.height = 48;
     }
     draw(){
-        context.fillStyle = 'rgba(225,0,0,0)';
+        context.fillStyle = 'rgba(225,0,0,0.5)';
         context.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
 }

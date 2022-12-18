@@ -1,13 +1,17 @@
 const canvas = document.querySelector('canvas'); //reference any element within the html
 const context = canvas.getContext('2d'); //setting the api to 2d
 
-
 canvas.width = 1024; //can do this in css obv these num are to ensure it works on any screen
 canvas.height = 576;
 
 const collisionsMap = []
 for(let i = 0; i < collisions.length; i+=70){ // 70 is the width of the map this is looping through the collision array in increments 
     collisionsMap.push(collisions.slice(i, 70 + i));
+}
+
+const battleZonesMap = []
+for(let i = 0; i < battleZonesData.length; i+=70){ // 70 is the width of the map this is looping through the collision array in increments 
+ battleZonesMap.push(battleZonesData.slice(i, 70 + i));
 }
 
 const boundaries = []
@@ -30,6 +34,21 @@ collisionsMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the a
 })
 
 
+const battleZones = [];
+battleZonesMap.forEach((row, i) =>{ // i is to loop over the arrays (all of the arrays)
+    row.forEach((symbol, j) =>{ //j is to loop through the elements within the arrays
+        if(symbol === 1025)
+        battleZones.push(
+            new Boundary({
+                position:{
+                    x: j * Boundary.width + offset.x,  // this will lay out the 'tiles' aka array elements perfectly on our map
+                    y: i * Boundary.height + offset.y, 
+                }
+            })
+        );
+    })
+})
+console.log(battleZones)
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
 image.src = './img/AidenTown.png'
@@ -48,8 +67,6 @@ playerLeft.src = './img/playerLeft.png';
 
 const playerRight = new Image();
 playerRight.src = './img/playerRight.png';
-
-
 
 //because it takes very long for it to load and the code is being called instantly so the image is not loading to make it load we use this
 // image.onload = () => {
@@ -111,7 +128,7 @@ const keys = {
     }
 }
 
-const movables = [background, ...boundaries, foreground]
+const movables = [background, ...boundaries, foreground, ...battleZones]
 
 function rectangularCollision({rectangle1, rectangle2}){
     return(
@@ -129,11 +146,31 @@ function animate(){
     boundaries.forEach(boundary => { //we cannot put a break statement inside a forEach
         boundary.draw();
     })
+    battleZones.forEach(battleZone => {
+        battleZone.draw();
+    })
     player.draw();
     foreground.draw();
     let moving = true;
     //telling the character to move
     player.moving = false;
+    
+    if(keys.w.pressed||keys.s.pressed||keys.a.pressed||keys.d.pressed){
+        for(let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i];
+            const overlappingArea =  Math.min(player.position.x + player.width , battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x);
+            //detecting for collision
+            if(rectangularCollision({
+                rectangle1: player,
+                rectangle2: battleZone
+            })&& overlappingArea > (player.width * player.height) / 2
+            ){
+                console.log("battle zone collision")
+               break;
+            }
+        }
+    }
+
     if(keys.w.pressed && lastKey === 'w') {
         player.moving = true;
         player.image = player.sprites.up;
