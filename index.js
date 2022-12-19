@@ -138,8 +138,12 @@ function rectangularCollision({rectangle1, rectangle2}){
         rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
 
+const battle = {
+    initiated: false
+}
 function animate(){
-    window.requestAnimationFrame(animate); //creates an infinite loop
+    const animationId = window.requestAnimationFrame(animate); //creates an infinite loop
+  
     //we need to keep rerendering it as the animation is going
     background.draw();
     //adding all the boundaries
@@ -151,15 +155,19 @@ function animate(){
     })
     player.draw();
     foreground.draw();
+     
     let moving = true;
     //telling the character to move
     player.moving = false;
-    
+
+    console.log(animationId);
+    if(battle.initiated) return
+    //activate a battle
     if(keys.w.pressed||keys.s.pressed||keys.a.pressed||keys.d.pressed){
         for(let i = 0; i < battleZones.length; i++) {
             const battleZone = battleZones[i];
             const overlappingArea =  Math.min(player.position.x + player.width, battleZone.position.x + battleZone.width) - Math.max(player.position.x, battleZone.position.x) * (Math.min(player.position.y, battleZone.position.y + battleZone.height) - Math.max(player.position.y, battleZone.position.y));
-            //detecting for collision
+            
             if(rectangularCollision({
                 rectangle1: player,
                 rectangle2: battleZone
@@ -167,7 +175,24 @@ function animate(){
             && overlappingArea > (player.width * player.height) / 2
             && Math.random() < 0.01
             ){
-                console.log("battle zone collision")
+                console.log("activate battle");
+                //deactivate old animation loop
+                window.cancelAnimationFrame(animationId);
+                battle.initiated = true;
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete(){
+                        gsap.to('#overlappingDiv', {
+                            opacity: 1,
+                            duration: 0.4,
+                        })
+                        //new animation loop for
+                        animateBattle();
+                    }
+                })
                 break;
             }
         }
@@ -176,10 +201,8 @@ function animate(){
     if(keys.w.pressed && lastKey === 'w') {
         player.moving = true;
         player.image = player.sprites.up;
-            //the for loop is to predict whether or not you character is going to collide with a boundary
             for(let i = 0; i < boundaries.length; i++) {
                 const boundary = boundaries[i];
-                //detecting for collision
                 if(rectangularCollision({
                     rectangle1: player,
                     rectangle2: {...boundary, position: {
@@ -187,10 +210,6 @@ function animate(){
                         y: boundary.position.y + 3
                     }}
                 }))
-                // player.position.x + player.width >= testBoundary.position.x && 
-                // player.position.x <= testBoundary.position.x + testBoundary.width &&
-                // player.position.y <= testBoundary.position.y + testBoundary.height &&
-                // player.position.y + player.height >= testBoundary.position.y)
                 {
                    moving = false;
                    break;
@@ -205,10 +224,8 @@ function animate(){
     else if(keys.a.pressed && lastKey === 'a')  {
         player.moving = true;
         player.image = player.sprites.left;
-        //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
-            //detecting for collision
             if(rectangularCollision({
                 rectangle1: player,
                 rectangle2: {...boundary, position: {
@@ -216,10 +233,6 @@ function animate(){
                     y: boundary.position.y
                 }}
             }))
-            // player.position.x + player.width >= testBoundary.position.x && 
-            // player.position.x <= testBoundary.position.x + testBoundary.width &&
-            // player.position.y <= testBoundary.position.y + testBoundary.height &&
-            // player.position.y + player.height >= testBoundary.position.y)
             {
                moving = false;
                break;
@@ -234,10 +247,8 @@ function animate(){
     else if(keys.s.pressed && lastKey === 's')  {
         player.moving = true;
         player.image = player.sprites.down;
-              //the for loop is to predict whether or not you character is going to collide with a boundary
         for(let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
-            //detecting for collision
             if(rectangularCollision({
                 rectangle1: player,
                 rectangle2: {...boundary, position: {
@@ -245,10 +256,7 @@ function animate(){
                     y: boundary.position.y - 3
                 }}
             }))
-            // player.position.x + player.width >= testBoundary.position.x && 
-            // player.position.x <= testBoundary.position.x + testBoundary.width &&
-            // player.position.y <= testBoundary.position.y + testBoundary.height &&
-            // player.position.y + player.height >= testBoundary.position.y)
+            
             {
                moving = false;
                break;
@@ -263,10 +271,9 @@ function animate(){
     else if(keys.d.pressed && lastKey === 'd')  {
         player.moving = true;
         player.image = player.sprites.right;
-                //the for loop is to predict whether or not you character is going to collide with a boundary
                 for(let i = 0; i < boundaries.length; i++) {
                     const boundary = boundaries[i];
-                    //detecting for collision
+                    
                     if(rectangularCollision({
                         rectangle1: player,
                         rectangle2: {...boundary, position: {
@@ -274,10 +281,6 @@ function animate(){
                             y: boundary.position.y
                         }}
                     }))
-                    // player.position.x + player.width >= testBoundary.position.x && 
-                    // player.position.x <= testBoundary.position.x + testBoundary.width &&
-                    // player.position.y <= testBoundary.position.y + testBoundary.height &&
-                    // player.position.y + player.height >= testBoundary.position.y)
                     {
                        moving = false;
                        break;
@@ -291,6 +294,11 @@ function animate(){
        }
 }
 animate();
+
+function animateBattle(){
+    window.requestAnimationFrame(animateBattle);
+    console.log("animating battle")
+}
 
 let lastKey = ''
 window.addEventListener('keydown',(e) => {
