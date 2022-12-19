@@ -188,9 +188,15 @@ function animate(){
                         gsap.to('#overlappingDiv', {
                             opacity: 1,
                             duration: 0.4,
+                            onComplete(){
+                                 //new animation loop for
+                                animateBattle();
+                                gsap.to('#overlappingDiv', {
+                                    opacity: 0,
+                                    duration: 0.4,
+                                })
+                            }
                         })
-                        //new animation loop for
-                        animateBattle();
                     }
                 })
                 break;
@@ -293,12 +299,38 @@ function animate(){
             }
        }
 }
-animate();
+//animate();
+
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = "./img/battleBackground.png";
+
+const battleBackground = new Sprite({
+    position:{
+        x: 0,
+        y: 0
+    },
+    image: battleBackgroundImage,
+});
+
+const draggleImage = new Image();
+battleBackgroundImage.src = "./img/draggleSprite.png";
+
+//first monster
+const draggle = new Sprite({
+    positions:{
+        x: 280,
+        y: 325
+    },
+    image: draggleImage
+});
 
 function animateBattle(){
     window.requestAnimationFrame(animateBattle);
-    console.log("animating battle")
+    battleBackground.draw();
+    draggle.draw();
 }
+
+animateBattle();
 
 let lastKey = ''
 window.addEventListener('keydown',(e) => {
