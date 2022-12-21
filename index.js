@@ -357,6 +357,7 @@ const draggle = new Sprite({
     hold: 30,
   },
   animate: true,
+  isEnemy: true,
 });
 
 const embyImage = new Image();
@@ -383,14 +384,11 @@ function animateBattle() {
 }
 
 animateBattle();
+//event listeners for our attack buttons
 document.querySelectorAll("button").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (e) => {
     emby.attack({
-      attack: {
-        name: "Tackle",
-        damage: 10,
-        type: "Normal",
-      },
+      attack: Tackle,
       recipient: draggle,
     });
   });

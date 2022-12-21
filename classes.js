@@ -5,6 +5,7 @@ class Sprite {
     frames = { max: 1, hold: 10 },
     sprites,
     animate = false,
+    isEnemy = false,
   }) {
     this.position = position;
     this.image = image;
@@ -15,9 +16,14 @@ class Sprite {
     };
     this.animate = animate;
     this.sprites = sprites;
+    this.opacity = 1;
+    this.health = 100;
+    this.isEnemy = isEnemy;
   }
 
   draw() {
+    context.save();
+    context.globalAlpha = this.opacity;
     context.drawImage(
       this.image,
       this.frames.val * this.width, //starting to crop the sprite sheet from the beginning (the left)
@@ -29,6 +35,7 @@ class Sprite {
       this.image.width / this.frames.max, //width of which the image will be rendered out at
       this.image.height //height of which the image will be rendered out at
     );
+    context.restore();
 
     if (this.animate) {
       if (this.frames.max > 1) {
@@ -43,12 +50,34 @@ class Sprite {
   }
   attack({ attack, recipient }) {
     const tl = gsap.timeline();
-
+    this.health -= attack.damage;
+    let movementDistance = 20;
+    if (this.isEnemy) movementDistance = -20;
+    let healthBar = "#green-bar";
+    if (this.isEnemy) healthBar = "#green-bar2";
     tl.to(this.position, {
-      x: this.position.x - 20,
+      x: this.position.x - movementDistance,
     })
       .to(this.position, {
-        x: this.position.x + 40,
+        x: this.position.x + movementDistance * 2,
+        duration: 0.1,
+        onComplete: () => {
+          gsap.to(healthBar, {
+            width: this.health + "%",
+          });
+          gsap.to(recipient.position, {
+            x: recipient.position.x + 10,
+            yoyo: true,
+            repeat: 5,
+            duration: 0.08,
+          });
+          gsap.to(recipient, {
+            opacity: 0,
+            repeat: 5,
+            yoyo: true,
+            duration: 0.08,
+          });
+        },
       })
       .to(this.position, {
         x: this.position.x,
