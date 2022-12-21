@@ -1,24 +1,52 @@
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<div style="display: inline-block; position: relative;">
-    <div id= "overlappingDiv"></div>
-    <div class = "health-bar">
-        <h1>Draggle</h1>
+
+<div style="display: inline-block; position: relative">
+  <div id="overlappingDiv"></div>
+
+  <!-- draggle's health card -->
+  <div class="draggle-name-card">
+    <h1>Draggle</h1>
+    <div class="health-bar">
+      <div class="green-bar"></div>
     </div>
-    <canvas></canvas>
-    <div class = "attack-bar">
-        <div class = "btn">
-            <button>Attack1</button>
-            <button>Attack2</button>
-        </div>
-        <div class = "attack-margin">
-            <h1>Attack Type</h1>
-        </div>
+  </div>
+
+  <!-- emby's health card -->
+  <div class="emby-name-card">
+    <h1>Emby</h1>
+    <div class="health-bar2">
+      <div class="green-bar2"></div>
     </div>
+  </div>
+
+  <canvas></canvas>
+
+  <div class="attack-bar">
+    <div class="btn">
+      <button>tackle</button>
+      <button>fireball</button>
+    </div>
+
+    <div class="attack-margin">
+      <h1>Attack Type</h1>
+    </div>
+  </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
+  integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 <script src="battleZones.js"></script>
 <script src="collisions.js"></script>
 <script src="classes.js"></script>
