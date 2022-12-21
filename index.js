@@ -53,7 +53,6 @@ battleZonesMap.forEach((row, i) => {
       );
   });
 });
-console.log(battleZones);
 //creating an html image object because .drawImage cannot work with just the source like ./img/x town.png
 const image = new Image();
 image.src = "./img/AidenTown.png";
@@ -376,20 +375,27 @@ const emby = new Sprite({
   animate: true,
 });
 
+const renderedSprites = [];
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
   draggle.draw();
   emby.draw();
+  renderedSprites.forEach((sprites) => {
+    sprites.draw();
+  });
 }
 
 animateBattle();
 //event listeners for our attack buttons
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
     emby.attack({
-      attack: Tackle,
+      attack: selectedAttack,
       recipient: draggle,
+      renderedSprites,
     });
   });
 });

@@ -48,40 +48,59 @@ class Sprite {
       }
     }
   }
-  attack({ attack, recipient }) {
-    const tl = gsap.timeline();
-    this.health -= attack.damage;
-    let movementDistance = 20;
-    if (this.isEnemy) movementDistance = -20;
-    let healthBar = "#green-bar";
-    if (this.isEnemy) healthBar = "#green-bar2";
-    tl.to(this.position, {
-      x: this.position.x - movementDistance,
-    })
-      .to(this.position, {
-        x: this.position.x + movementDistance * 2,
-        duration: 0.1,
-        onComplete: () => {
-          gsap.to(healthBar, {
-            width: this.health + "%",
+
+  attack({ attack, recipient, renderedSprites }) {
+    switch (attack.name) {
+      case "Fireball":
+        const fireballImage = new Image();
+        fireballImage.src = "./img/fireball.png";
+
+        const fireball = new Sprite({
+          position: { x: this.position.x, y: this.position.y },
+          image: fireballImage,
+        });
+        renderedSprites.push(fireball);
+        break;
+      case "Tackle":
+        const tl = gsap.timeline();
+
+        this.health -= attack.damage;
+
+        let movementDistance = 20;
+        if (this.isEnemy) movementDistance = -20;
+
+        let healthBar = "#green-bar";
+        if (this.isEnemy) healthBar = "#green-bar2";
+
+        tl.to(this.position, {
+          x: this.position.x - movementDistance,
+        })
+          .to(this.position, {
+            x: this.position.x + movementDistance * 2,
+            duration: 0.1,
+            onComplete: () => {
+              gsap.to(healthBar, {
+                width: this.health + "%",
+              });
+              gsap.to(recipient.position, {
+                x: recipient.position.x + 10,
+                yoyo: true,
+                repeat: 5,
+                duration: 0.08,
+              });
+              gsap.to(recipient, {
+                opacity: 0,
+                repeat: 5,
+                yoyo: true,
+                duration: 0.08,
+              });
+            },
+          })
+          .to(this.position, {
+            x: this.position.x,
           });
-          gsap.to(recipient.position, {
-            x: recipient.position.x + 10,
-            yoyo: true,
-            repeat: 5,
-            duration: 0.08,
-          });
-          gsap.to(recipient, {
-            opacity: 0,
-            repeat: 5,
-            yoyo: true,
-            duration: 0.08,
-          });
-        },
-      })
-      .to(this.position, {
-        x: this.position.x,
-      });
+        break;
+    }
   }
 }
 class Boundary {
@@ -93,7 +112,7 @@ class Boundary {
     this.height = 48;
   }
   draw() {
-    context.fillStyle = "rgba(225,0,0,0.5)";
+    context.fillStyle = "rgba(225,0,0,0)";
     context.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 }
