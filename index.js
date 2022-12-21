@@ -136,7 +136,7 @@ const movables = [background, ...boundaries, foreground, ...battleZones];
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
   return (
-    player.position.x + player.width >= rectangle2.position.x &&
+    rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
     rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
     rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
     rectangle1.position.y + rectangle1.height >= rectangle2.position.y
@@ -328,7 +328,7 @@ function animate() {
     }
   }
 }
-//animate();
+animate();
 
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "./img/battleBackground.png";
@@ -387,7 +387,7 @@ function animateBattle() {
   });
 }
 
-animateBattle();
+//animateBattle();
 //event listeners for our attack buttons
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", (e) => {

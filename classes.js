@@ -58,8 +58,18 @@ class Sprite {
         const fireball = new Sprite({
           position: { x: this.position.x, y: this.position.y },
           image: fireballImage,
+          frames: {
+            max: 4,
+            hold: 10,
+          },
+          animate: true,
         });
         renderedSprites.push(fireball);
+
+        gsap.to(fireball.position, {
+          x: recipient.position.x,
+          y: recipient.position.y,
+        });
         break;
       case "Tackle":
         const tl = gsap.timeline();
