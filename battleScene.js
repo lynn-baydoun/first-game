@@ -42,7 +42,7 @@ const emby = new Sprite({
     hold: 30,
   },
   animate: true,
-  name: "emby",
+  name: "Emby",
 });
 
 const renderedSprites = [draggle, emby];
@@ -57,6 +57,7 @@ function animateBattle() {
 }
 
 animateBattle();
+const queue = [];
 //event listeners for our attack buttons
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -66,5 +67,26 @@ document.querySelectorAll("button").forEach((button) => {
       recipient: draggle,
       renderedSprites,
     });
+
+    queue.push(() => {
+      draggle.attack({
+        attack: attacks.Tackle,
+        recipient: emby,
+        renderedSprites,
+      });
+    });
+    queue.push(() => {
+      draggle.attack({
+        attack: attacks.Fireball,
+        recipient: emby,
+        renderedSprites,
+      });
+    });
   });
+});
+document.querySelector("#dialogueBox").addEventListener("click", (e) => {
+  if (queue.length > 0) {
+    queue[0]();
+    queue.shift();
+  } else e.currentTarget.style.display = "none";
 });
