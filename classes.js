@@ -6,6 +6,8 @@ class Sprite {
     sprites,
     animate = false,
     isEnemy = false,
+    rotation = 0,
+    name,
   }) {
     this.position = position;
     this.image = image;
@@ -19,11 +21,23 @@ class Sprite {
     this.opacity = 1;
     this.health = 100;
     this.isEnemy = isEnemy;
+    this.rotation = rotation;
+    this.name = name;
   }
 
   draw() {
     context.save();
     context.globalAlpha = this.opacity;
+    //for the rotation animation
+    context.translate(
+      this.position.x + this.width / 2,
+      this.position.y + this.height / 2
+    );
+    context.rotate(this.rotation);
+    context.translate(
+      -this.position.x - this.width / 2,
+      -this.position.y - this.height / 2
+    );
     context.drawImage(
       this.image,
       this.frames.val * this.width, //starting to crop the sprite sheet from the beginning (the left)
@@ -50,11 +64,21 @@ class Sprite {
   }
 
   attack({ attack, recipient, renderedSprites }) {
+    document.querySelector("#dialogueBox").style.display = "block";
+    document.querySelector("#dialogueBox").innerHTML =
+      this.name + " used " + attack.name;
+    let healthBar = "#green-bar";
+    if (this.isEnemy) healthBar = "#green-bar2";
+
+    this.health -= attack.damage;
+
+    let rotation = 1;
+    if (this.isEnemy) rotation = -2.2;
     switch (attack.name) {
       case "Fireball":
         const fireballImage = new Image();
         fireballImage.src = "./img/fireball.png";
-
+        //animating the fireball
         const fireball = new Sprite({
           position: { x: this.position.x, y: this.position.y },
           image: fireballImage,
@@ -63,25 +87,47 @@ class Sprite {
             hold: 10,
           },
           animate: true,
+          rotation,
         });
-        renderedSprites.push(fireball);
-
+        //rendering draggle emby and the fireball so the fireball spawns in the correct place (in front of emby and not on top of)
+        renderedSprites.splice(1, 0, fireball);
+        //moving the fireball towards draggle
         gsap.to(fireball.position, {
           x: recipient.position.x,
           y: recipient.position.y,
+          onComplete: () => {
+            //where x gets hit
+            //health bar decreases by 25 points
+            gsap.to(healthBar, {
+              width: this.health + "%",
+            });
+            //draggle moves
+            gsap.to(recipient.position, {
+              x: recipient.position.x + 10,
+              yoyo: true,
+              repeat: 5,
+              duration: 0.08,
+            });
+            //draggle flashes
+            gsap.to(recipient, {
+              opacity: 0,
+              repeat: 5,
+              yoyo: true,
+              duration: 0.08,
+            });
+            //what removes the fireball after draggle is hit
+            renderedSprites.splice(1, 1);
+          },
         });
         break;
+
       case "Tackle":
+        //we use gsap.timeline to make a cohesive timeline to when emby moves and draggle is hit and draggle moves
         const tl = gsap.timeline();
-
-        this.health -= attack.damage;
-
+        //this was made because draggle is supposed to move differently than emby
         let movementDistance = 20;
         if (this.isEnemy) movementDistance = -20;
-
-        let healthBar = "#green-bar";
-        if (this.isEnemy) healthBar = "#green-bar2";
-
+        //x administering the hit moves to attack
         tl.to(this.position, {
           x: this.position.x - movementDistance,
         })
@@ -89,15 +135,19 @@ class Sprite {
             x: this.position.x + movementDistance * 2,
             duration: 0.1,
             onComplete: () => {
+              //where x gets hit
+              //health bar decreases
               gsap.to(healthBar, {
                 width: this.health + "%",
               });
+              //x hit moves
               gsap.to(recipient.position, {
                 x: recipient.position.x + 10,
                 yoyo: true,
                 repeat: 5,
                 duration: 0.08,
               });
+              //x hit flashes in and out
               gsap.to(recipient, {
                 opacity: 0,
                 repeat: 5,
@@ -106,6 +156,7 @@ class Sprite {
               });
             },
           })
+          //x who administered the attack gets back to default place
           .to(this.position, {
             x: this.position.x,
           });
