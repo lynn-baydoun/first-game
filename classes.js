@@ -70,9 +70,19 @@ class Monster extends Sprite {
     animate = false,
     rotation = 0,
   }) {
+    super({
+      position,
+      image,
+      frames,
+      sprites,
+      animate,
+      rotation,
+      attacks,
+    });
     this.isEnemy = isEnemy;
     this.name = name;
     this.health = 100;
+    this.attacks = attacks;
   }
 
   attack({ attack, recipient, renderedSprites }) {
