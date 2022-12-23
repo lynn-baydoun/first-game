@@ -15,12 +15,10 @@ const emby = new Monster(monsters.Emby);
 //we are using render so the animation and etc works within a timeline
 const renderedSprites = [draggle, emby];
 
-emby.attacks.forEach((attack) => {
-  //the attack buttons:
-  const button = document.createElement("button");
-  button.innerHTML = attack.name;
-  document.querySelector("#attacksBox").append(button);
-});
+//the attack buttons:
+const button = document.createElement("button");
+button.innerHTML = "Fireball";
+document.querySelector("#attacksBox").append(button);
 
 //battle animation
 function animateBattle() {

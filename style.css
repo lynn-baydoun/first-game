@@ -1,4 +1,4 @@
-body{
+/* body{
     background-color:black;
     font-family: 'Press Start 2P', cursive;
 }
@@ -14,9 +14,9 @@ body{
 }
  button:hover {
     background-color: #ddd;
-}
+} */
 
-#overlappingDiv{
+/* #overlappingDiv{
     background-color:black; 
     position: absolute; 
     top: 0; 
@@ -25,9 +25,9 @@ body{
     left: 0; 
     opacity: 0; 
     pointer-events: none
-}
+} */
 
-.draggle-name-card{
+/* .draggle-name-card{
     background-color: white;
     width: 250px;
     position: absolute;
@@ -36,23 +36,23 @@ body{
     border: 4px black solid;
     font-size: 16px;
     padding: 12px;
-}
+} */
  /*draggle's health bar*/
-#health-bar{
+/* #health-bar{
     position: relative;
     height: 5px;
     margin-top: 10px;
     background-color: #ccc;
-}
-#green-bar{
+} */
+/* #green-bar{
     background-color: green;
     height: 5px;
     right: 0;
     left: 0;
     position: absolute;
-}
+} */
  /*emby's health bar*/
- .emby-name-card{
+ /* .emby-name-card{
     background-color: white;
     width: 250px;
     position: absolute;
@@ -61,21 +61,21 @@ body{
     border: 4px black solid;
     font-size: 16px;
     padding: 12px;
-}
-#health-bar2{
+} */
+/* #health-bar2{
     position: relative;
     height: 5px;
     margin-top: 10px;
     background-color: #ccc;
-}
-#green-bar2{
+} */
+/* #green-bar2{
     background-color: green;
     height: 5px;
     right: 0;
     left: 0;
     position: absolute;
-}
-.attack-bar{
+} */
+/* .attack-bar{
     background-color: white; 
     height: 140px; 
     position: absolute; 
@@ -84,18 +84,18 @@ body{
     left: 0;
     border-top: 4px black solid;
     display: flex;
-}
+} */
 
-#attacksBox{
+/* #attacksBox{
     width: 66.66%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-}
+} */
 
-.attack-margin {
+/* .attack-margin {
     display: flex;
     align-items: center; 
     justify-content: center; 
     width: 33.33%;
     border-left: 4px black solid;
-}
+} */

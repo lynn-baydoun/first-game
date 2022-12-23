@@ -5,31 +5,132 @@
     href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      background-color: black;
+      font-family: "Press Start 2P", cursive;
+    }
+    h1 {
+      margin: 0;
+      font-size: 16px;
+    }
+    button {
+      border: 0;
+      cursor: pointer;
+      font-family: "Press Start 2P", cursive;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #ddd;
+    }
+  </style>
 </head>
 
 <div style="display: inline-block; position: relative">
-  <div id="overlappingDiv"></div>
+  <div
+    id="overlappingDiv"
+    style="
+      background-color: black;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+    "
+  ></div>
 
   <!-- draggle's health card -->
-  <div class="draggle-name-card">
+  <div
+    class="draggle-name-card"
+    style="
+      background-color: white;
+      width: 250px;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      border: 4px black solid;
+      font-size: 16px;
+      padding: 12px;
+    "
+  >
     <h1>Draggle</h1>
-    <div id="health-bar">
-      <div id="green-bar"></div>
+    <div
+      id="health-bar"
+      style="
+        position: relative;
+        height: 5px;
+        margin-top: 10px;
+        background-color: #ccc;
+      "
+    >
+      <div
+        id="green-bar"
+        style="
+          background-color: green;
+          height: 5px;
+          right: 0;
+          left: 0;
+          position: absolute;
+        "
+      ></div>
     </div>
   </div>
 
   <!-- emby's health card -->
-  <div class="emby-name-card">
+  <div
+    class="emby-name-card"
+    style="
+      background-color: white;
+      width: 250px;
+      position: absolute;
+      top: 330px;
+      right: 50px;
+      border: 4px black solid;
+      font-size: 16px;
+      padding: 12px;
+    "
+  >
     <h1>Emby</h1>
-    <div id="health-bar2">
-      <div id="green-bar2"></div>
+    <div
+      id="health-bar2"
+      style="
+        position: relative;
+        height: 5px;
+        margin-top: 10px;
+        background-color: #ccc;
+      "
+    >
+      <div
+        id="green-bar2"
+        style="
+          background-color: green;
+          height: 5px;
+          right: 0;
+          left: 0;
+          position: absolute;
+        "
+      ></div>
     </div>
   </div>
 
   <canvas></canvas>
 
-  <div class="attack-bar">
+  <div
+    class="attack-bar"
+    style="
+      background-color: white;
+      height: 140px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      border-top: 4px black solid;
+      display: flex;
+    "
+  >
     <div
       id="dialogueBox"
       style="
@@ -46,9 +147,25 @@
     >
       rawr
     </div>
-    <div id="attacksBox"></div>
+    <div
+      id="attacksBox"
+      style="
+        width: 66.66%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      "
+    ></div>
 
-    <div class="attack-margin">
+    <div
+      class="attack-margin"
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 33.33%;
+        border-left: 4px black solid;
+      "
+    >
       <h1>Attack Type</h1>
     </div>
   </div>
