@@ -9,44 +9,16 @@ const battleBackground = new Sprite({
   image: battleBackgroundImage,
 });
 
-//first monster
-const draggleImage = new Image();
-draggleImage.src = "./img/draggleSprite.png";
-
-const draggle = new Sprite({
-  position: {
-    x: 800,
-    y: 100,
-  },
-  image: draggleImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  isEnemy: true,
-  name: "Draggle",
-});
-
-const embyImage = new Image();
-embyImage.src = "./img/embySprite.png";
-
-const emby = new Sprite({
-  position: {
-    x: 280,
-    y: 325,
-  },
-  image: embyImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  name: "Emby",
-});
-
+//monsters
+const draggle = new Sprite(monsters.Draggle);
+const emby = new Sprite(monsters.Emby);
+//we are using render so the animation and etc works within a timeline
 const renderedSprites = [draggle, emby];
-
+//the attack buttons:
+const button = document.createElement("button");
+button.innerHTML = "Fireball";
+document.querySelector("#attacksBox").append(button);
+//battle animation
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
@@ -57,6 +29,7 @@ function animateBattle() {
 }
 
 animateBattle();
+//we created a Q array to Q all the attacks from the enemy and randomize it accordingly
 const queue = [];
 //event listeners for our attack buttons
 document.querySelectorAll("button").forEach((button) => {
@@ -84,6 +57,7 @@ document.querySelectorAll("button").forEach((button) => {
     });
   });
 });
+//changing the dialogue box according to our enemy's attacks
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
     queue[0]();

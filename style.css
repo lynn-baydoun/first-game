@@ -86,7 +86,7 @@ body{
     display: flex;
 }
 
-.btn{
+#attacksBox{
     width: 66.66%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
