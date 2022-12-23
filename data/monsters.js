@@ -17,6 +17,7 @@ const monsters = {
     },
     animate: true,
     name: "Emby",
+    attacks: [attacks.Tackless, attacks.Fireball],
   },
   Draggle: {
     position: {
@@ -31,5 +32,6 @@ const monsters = {
     animate: true,
     isEnemy: true,
     name: "Draggle",
+    attacks: [attacks.Tackle],
   },
 };
