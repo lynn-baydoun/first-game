@@ -49,7 +49,12 @@ document.querySelectorAll("button").forEach((button) => {
     if (draggle.health <= 0) {
       queue.push(() => {
         draggle.faint({});
-        return;
+      });
+      queue.push(() => {
+        //fade to black
+        gsap.to("#overlappingDiv", {
+          opacity: 1,
+        });
       });
     }
     //randomizing enemy attacks
@@ -66,7 +71,6 @@ document.querySelectorAll("button").forEach((button) => {
       if (emby.health <= 0) {
         queue.push(() => {
           emby.faint({});
-          return;
         });
       }
     });
