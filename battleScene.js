@@ -120,8 +120,9 @@ function animateBattle() {
     sprites.draw();
   });
 }
-initBattle();
-animateBattle();
+animate();
+//initBattle();
+//animateBattle();
 
 //changing the dialogue box according to our enemy's attacks
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {

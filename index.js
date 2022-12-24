@@ -165,7 +165,6 @@ function animate() {
   let moving = true;
   //telling the character to move
   player.animate = false;
-
   console.log(animationId);
   if (battle.initiated) return;
   //activate a battle
@@ -221,7 +220,6 @@ function animate() {
       }
     }
   }
-
   if (keys.w.pressed && lastKey === "w") {
     player.animate = true;
     player.image = player.sprites.up;
@@ -329,7 +327,6 @@ function animate() {
     }
   }
 }
-//animate();
 
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
