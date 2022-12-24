@@ -11,45 +11,46 @@
 <div style="display: inline-block; position: relative">
   <div id="overlappingDiv" style="z-index: 10"></div>
 
-  <!-- draggle's health card -->
-  <div class="draggle-name-card">
-    <h1>Draggle</h1>
-    <div id="health-bar">
-      <div id="green-bar"></div>
-    </div>
-  </div>
-
-  <!-- emby's health card -->
-  <div class="emby-name-card">
-    <h1>Emby</h1>
-    <div id="health-bar2">
-      <div id="green-bar2"></div>
-    </div>
-  </div>
-
   <canvas></canvas>
-
-  <div class="attack-bar">
-    <div
-      id="dialogueBox"
-      style="
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: white;
-        padding: 12px;
-        display: none;
-        cursor: pointer;
-      "
-    >
-      rawr
+  <div id="userinterface">
+    <!-- draggle's health card -->
+    <div class="draggle-name-card">
+      <h1>Draggle</h1>
+      <div id="health-bar">
+        <div id="green-bar"></div>
+      </div>
     </div>
-    <div id="attacksBox"></div>
 
-    <div class="attack-margin">
-      <h1 id="attackType">Attack Type</h1>
+    <!-- emby's health card -->
+    <div class="emby-name-card">
+      <h1>Emby</h1>
+      <div id="health-bar2">
+        <div id="green-bar2"></div>
+      </div>
+    </div>
+
+    <div class="attack-bar">
+      <div
+        id="dialogueBox"
+        style="
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: white;
+          padding: 12px;
+          display: none;
+          cursor: pointer;
+        "
+      >
+        rawr
+      </div>
+      <div id="attacksBox"></div>
+
+      <div class="attack-margin">
+        <h1 id="attackType">Attack Type</h1>
+      </div>
     </div>
   </div>
 </div>
