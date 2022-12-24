@@ -20,6 +20,11 @@ let queue;
 
 //to make sure the next battle loads in correctly
 function initBattle() {
+  document.querySelector("#userinterface").style.display = "block";
+  document.querySelector("#dialogueBox").style.display = "none";
+  document.querySelector("#green-bar").style.width = "100%";
+  document.querySelector("#green-bar2").style.width = "100%";
+  document.querySelector("#attacksBox").replaceChildren(); //to avoid duplicates
   draggle = new Monster(monsters.Draggle);
   emby = new Monster(monsters.Emby);
   renderedSprites = [draggle, emby];
