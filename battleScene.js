@@ -14,6 +14,8 @@ const draggle = new Monster(monsters.Draggle);
 const emby = new Monster(monsters.Emby);
 //we are using render so the animation and etc works within a timeline
 const renderedSprites = [draggle, emby];
+
+//adding both attack buttons
 emby.attacks.forEach((attack) => {
   //the attack buttons:
   const button = document.createElement("button");
@@ -44,16 +46,12 @@ document.querySelectorAll("button").forEach((button) => {
       renderedSprites,
     });
 
+    //randomizing attacks
+    const randomAttack =
+      draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
     queue.push(() => {
       draggle.attack({
-        attack: attacks.Tackle,
-        recipient: emby,
-        renderedSprites,
-      });
-    });
-    queue.push(() => {
-      draggle.attack({
-        attack: attacks.Fireball,
+        attack: randomAttack,
         recipient: emby,
         renderedSprites,
       });
