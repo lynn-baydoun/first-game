@@ -6,6 +6,7 @@ class Sprite {
     sprites,
     animate = false,
     rotation = 0,
+    attacks,
   }) {
     this.position = position;
     this.image = image;
@@ -18,6 +19,7 @@ class Sprite {
     this.sprites = sprites;
     this.opacity = 1;
     this.rotation = rotation;
+    this.attacks = attacks;
   }
 
   draw() {
@@ -69,6 +71,7 @@ class Monster extends Sprite {
     sprites,
     animate = false,
     rotation = 0,
+    attacks,
   }) {
     super({
       position,
@@ -82,15 +85,14 @@ class Monster extends Sprite {
     this.isEnemy = isEnemy;
     this.name = name;
     this.health = 100;
-    this.attacks = attacks;
   }
 
   attack({ attack, recipient, renderedSprites }) {
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML =
       this.name + " used " + attack.name;
-    let healthBar = "#playerHealthBar";
-    if (this.isEnemy) healthBar = "#enemyHealthBar";
+    let healthBar = "#green-bar";
+    if (this.isEnemy) healthBar = "#green-bar2";
 
     this.health -= attack.damage;
 
