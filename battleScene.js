@@ -45,7 +45,7 @@ document.querySelectorAll("button").forEach((button) => {
       recipient: draggle,
       renderedSprites,
     });
-    //death rip
+    //death rip draggle
     if (draggle.health <= 0) {
       queue.push(() => {
         draggle.faint({});
@@ -62,6 +62,13 @@ document.querySelectorAll("button").forEach((button) => {
         recipient: emby,
         renderedSprites,
       });
+      //death rip emby
+      if (emby.health <= 0) {
+        queue.push(() => {
+          emby.faint({});
+          return;
+        });
+      }
     });
   });
 
