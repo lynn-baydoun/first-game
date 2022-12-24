@@ -80,7 +80,20 @@ function initBattle() {
             queue.push(() => {
               emby.faint({});
             });
-          }
+          } 
+          queue.push(() => {
+            //fade to black
+            gsap.to("#overlappingDiv", {
+              opacity: 1,
+              onComplete: () => {
+                cancelAnimationFrame(battleAnimationId);
+                animate();
+                document.querySelector("#userinterface").style.display = "none";
+                gsap.to("#overlappingDiv", {
+                  opacity: 0,
+                });
+              },
+            });
         });
       });
 
