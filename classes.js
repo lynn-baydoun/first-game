@@ -87,6 +87,17 @@ class Monster extends Sprite {
     this.health = 100;
   }
 
+  faint() {
+    document.querySelector("#dialogueBox").innerHTML = this.name + " died! ";
+    //the dead character laid down
+    gsap.to(this.position, {
+      y: this.position.y + 20,
+    });
+    //changing the opacity of the dead character
+    gsap.to(this, {
+      opacity: 0,
+    });
+  }
   attack({ attack, recipient, renderedSprites }) {
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML =
@@ -94,7 +105,7 @@ class Monster extends Sprite {
     let healthBar = "#green-bar";
     if (this.isEnemy) healthBar = "#green-bar2";
 
-    this.health -= attack.damage;
+    recipient.health -= attack.damage;
 
     let rotation = 1;
     if (this.isEnemy) rotation = -2.2;
@@ -123,7 +134,7 @@ class Monster extends Sprite {
             //where x gets hit
             //health bar decreases by 25 points
             gsap.to(healthBar, {
-              width: this.health + "%",
+              width: recipient.health + "%",
             });
             //draggle moves
             gsap.to(recipient.position, {
@@ -162,7 +173,7 @@ class Monster extends Sprite {
               //where x gets hit
               //health bar decreases
               gsap.to(healthBar, {
-                width: this.health + "%",
+                width: recipient.health + "%",
               });
               //x hit moves
               gsap.to(recipient.position, {

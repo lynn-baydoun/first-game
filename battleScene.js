@@ -45,10 +45,17 @@ document.querySelectorAll("button").forEach((button) => {
       recipient: draggle,
       renderedSprites,
     });
-
-    //randomizing attacks
+    //death rip
+    if (draggle.health <= 0) {
+      queue.push(() => {
+        draggle.faint({});
+        return;
+      });
+    }
+    //randomizing enemy attacks
     const randomAttack =
       draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
+
     queue.push(() => {
       draggle.attack({
         attack: randomAttack,
@@ -56,6 +63,13 @@ document.querySelectorAll("button").forEach((button) => {
         renderedSprites,
       });
     });
+  });
+
+  //changes the attack type display
+  button.addEventListener("mouseenter", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
+    document.querySelector("#attackType").innerHTML = selectedAttack.type;
+    document.querySelector("#attackType").style.color = selectedAttack.color;
   });
 });
 //changing the dialogue box according to our enemy's attacks
